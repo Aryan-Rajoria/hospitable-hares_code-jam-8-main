@@ -1,5 +1,7 @@
 # flake8: noqa
 
+# flake8: noqa
+
 import sys, os
 
 from asciimatics.exceptions import ResizeScreenError
@@ -37,8 +39,11 @@ class BoxSelection(object):
         '''
 
     def refresh(self):
+        pag_no=1
         
-        self.boxes = 
+        ls_bx=a_w.get_boxes
+        for i in range (0,len(ls_bx)):
+            self.boxes =dict([(ls_bx[i].get("_id")),(ls_box[i].get("name"))])
         pass
     def new_box(self, data):
 
