@@ -1,7 +1,5 @@
 # flake8: noqa
 
-# flake8: noqa
-
 import sys, os
 
 from asciimatics.exceptions import ResizeScreenError
@@ -12,7 +10,7 @@ from tui.view.box_page import BoxPage, NewBoxPage
 from tui.view.chat import ChatPage
 from tui.view.home import HomePage
 from tui.view.settings import Settings
-from tui import api_wrapper
+from tui import api_wrapper 
 from tui import crypt
 
 
@@ -38,15 +36,13 @@ class BoxSelection(object):
         post() -> box_id, message_body
         '''
 
-    def refresh(self):
-        pag_no=1
-        
-        ls_bx=a_w.get_boxes
-        for i in range (0,len(ls_bx)):
-            self.boxes =dict([(ls_bx[i].get("_id")),(ls_box[i].get("name"))])
+    def refresh(self,pg_n=1):
+        list_box=api_wrapper.get_boxes(page_no=pg_no)
+        for bx_inf in list_box:
+            self.boxes[bx_inf.get("_id")] = bx_inf.get("name")
         pass
     def new_box(self, data):
-
+        
         pass
 
 
@@ -59,7 +55,7 @@ chat_data = {
 def main(screen: Screen, scene: Scene) -> None:
     """The class's docstring"""
     boxselection = BoxSelection()
-    #boxselection.refresh()
+    boxselection.refresh()
 
     scenes = [
         Scene([HomePage(screen)], -1, name="HomePage"),
