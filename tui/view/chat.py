@@ -9,11 +9,13 @@ from asciimatics.event import KeyboardEvent
 class ChatPage(Frame):
     """The class def for login page"""
 
-    def __init__(self, screen: Screen, chat_data: dict):
+    def __init__(self, screen: Screen, box_selection: object):
         #
         super().__init__(screen, screen.height * 2 // 3, screen.width * 2 // 3)
         # self._my_message = ''
-        self._chat_data = chat_data
+        self._box_selection = box_selection
+        self._chat_data = box_selection.load_chat(box_selection.current_box_id)
+        self.data = self._chat_data
         # Frame can contain multiple layouts, add display-widgets to layout to display the data you want
         # first parameter explained: no of items on list = no of columns. value of list item = column width
         layout = Layout([500], fill_frame=True)
@@ -52,7 +54,11 @@ class ChatPage(Frame):
                 if 'is_on_text' not in self.data:
                     self.data['is_on_text'] = True
                 if self.data['is_on_text']:
-                    self._chat_data['chat'].append(self.data['my_message'])
+                    if 'my_message'  not in self.data or self.data["my_message"]=="":
+                        self.data['my_message'] = ""
+                    else:
+                        self._chat_data['chat'].append(self.data['my_message'])
+                        self._box_selection.send_message(box_id=self._box_selection.current_box_id, message=self.data["my_message"])
                     self.reset()
                 
         return super().process_event(event)
@@ -68,15 +74,18 @@ class ChatPage(Frame):
 
     def _onclick_send_message(self) -> None:
         """Send Message"""
-        if 'my_message'  not in self.data:
+        if 'my_message'  not in self.data or self.data["my_message"]=="":
             self.data['my_message'] = ""
-        self._chat_data['chat'].append(self.data['my_message'])
+        else:
+            self._chat_data['chat'].append(self.data['my_message'])
+            self._box_selection.send_message(box_id=self._box_selection.current_box_id, message=self.data["my_message"])
         # self.data['chat'].append(self.data['my_message'])
         self.reset()
 
     def reset(self) -> None:
         """Check docs"""
         super().reset()
+        self._chat_data = self._box_selection.load_chat(self._box_selection.current_box_id)
         self.data = self._chat_data
 
     def _onclick_previous(self) -> None:

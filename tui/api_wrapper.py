@@ -1,4 +1,4 @@
-from crypt import decrypt, encrypt, load_key
+from tui.crypt import decrypt, encrypt, load_key
 from typing import Dict
 
 import requests

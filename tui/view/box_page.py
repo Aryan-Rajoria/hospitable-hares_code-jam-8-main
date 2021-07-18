@@ -47,7 +47,7 @@ class BoxPage(Frame):
             name="box_name",
             add_scroll_bar=True,
             on_change=self._on_pick,
-            on_select=self._edit,
+            on_select=self._select,
         )
         box_layout.add_widget(list_box)
 
@@ -94,9 +94,10 @@ class BoxPage(Frame):
     def _onclick_quit(self):
             raise StopApplication("usr prssed exit")
 
-    def _edit(self):
+    def _select(self):
         self.save()
-        self._model.current_id = self.data["box_name"]
+        self._box_selection.current_box_id = self.data["box_name"]
+        self._box_selection.load_chat(self.data["box_name"])
         raise NextScene("ChatPage")
 
     def _on_pick(self):
@@ -140,7 +141,7 @@ class NewBoxPage(Frame):
 
     def _onclick_create(self):
         self.save()
-        newboxdata = self.data
+        newboxdata = self.data["box_name"]
         self.box_selection.new_box(newboxdata)
         raise NextScene("ChatPage")
     def _onclick_cancel(self):

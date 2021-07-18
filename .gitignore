@@ -26,6 +26,8 @@ data.db
 *.so
 dist/
 build/
+key.key
+token
 
 # IDEs
 # PyCharm
