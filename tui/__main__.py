@@ -31,18 +31,23 @@ class BoxSelection(object):
             api_wrapper.join()
         self.boxes = dict()
         self.refresh()
+        self.chat_data
         '''
         get_posts() -> box_id, page_no, load_more
         post() -> box_id, message_body
         '''
 
     def refresh(self,pg_n=1):
-        list_box=api_wrapper.get_boxes(page_no=pg_no)
+        list_box=api_wrapper.get_boxes(page_no=pg_n)
         for bx_inf in list_box:
             self.boxes[bx_inf.get("_id")] = bx_inf.get("name")
         pass
     def new_box(self, data):
-        
+        api_wrapper.new_box(data["box_name"])
+        self.chat_data = {
+            "chat":[],
+            "my_message": '',
+        }
         pass
 
 
@@ -58,9 +63,9 @@ def main(screen: Screen, scene: Scene) -> None:
     boxselection.refresh()
 
     scenes = [
-        Scene([HomePage(screen)], -1, name="HomePage"),
+        #Scene([HomePage(screen)], -1, name="HomePage"),
         Scene([BoxPage(screen, box_selection=boxselection)], -1, name="BoxPage"),
-        Scene([ChatPage(screen, chat_data=chat_data)], -1, name="ChatPage"),
+        Scene([ChatPage(screen, chat_data=boxselection.chat_data)], -1, name="ChatPage"),
         Scene([NewBoxPage(screen, boxselection)], -1, name="NewBoxPage"),
         Scene([Settings(screen)], -1, name="Settings"),
     ]

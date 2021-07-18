@@ -80,7 +80,7 @@ class ChatPage(Frame):
         self.data = self._chat_data
 
     def _onclick_previous(self) -> None:
-        raise NextScene("HomePage")
+        raise NextScene("BoxPage")
 
     def _onclick_quit(self) -> None:
         raise StopApplication("User pressed quit")

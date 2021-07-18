@@ -25,10 +25,9 @@ class BoxPage(Frame):
     def __init__(self, screen, box_selection):
 
         super().__init__(screen, screen.height*2//3, screen.width*2//3, hover_focus=True, can_scroll=True)
-        global box
 
-        #self._box_selection = box_selection
-        #box = self._box_selection.boxes
+        self._box_selection = box_selection
+        box = self._box_selection.boxes
         scr_height = screen.height
         scr_width = screen.width
 
@@ -44,7 +43,7 @@ class BoxPage(Frame):
 
         list_box = ListBox(
             Widget.FILL_FRAME,
-            [(box_list[i], i) for i in range(len(box_list))],
+            [(box[i], i) for i in box],
             name="box_name",
             add_scroll_bar=True,
             on_change=self._on_pick,
