@@ -101,7 +101,7 @@ class Settings(Frame):
 
     def _on_back(self) -> None:
         self.save()
-        raise NextScene("HomePage")
+        raise NextScene("BoxPage")
     
     def _shift_widget_focus(self) -> None:
         self.save()
